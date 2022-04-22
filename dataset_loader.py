@@ -17,16 +17,21 @@ URL_CREATE_RESOURCE = os.path.join(
     "api/3/action/resource_create")
 
 
-def main(fpath):
+def main(europeana_dir):
+    for fname in os.listdir(europeana_dir)[:10]:
+        load_europeana_dataset(os.path.join(europeana_dir, fname))
+
+
+def load_europeana_dataset(fpath):
     with open(fpath) as f:
         dataset = json.load(f)
     dataset['name'] = dataset['name'].lower()
     dataset['name'] = dataset['name']+str(uuid4())[-6:]
     dataset['owner_org'] = dataset['owner_org'].lower()
-    load_europeana_dataset(dataset)
+    post_dataset(dataset)
 
 
-def load_europeana_dataset(dataset):
+def post_dataset(dataset):
     headers = {"Authorization": os.getenv("CKAN_TOKEN")}
     resources = dataset.pop('resources')
     r = requests.post(URL_CREATE_DATASET, headers=headers, data=dataset)
@@ -37,5 +42,5 @@ def load_europeana_dataset(dataset):
 
 
 if __name__ == "__main__":
-    fpath = 'path/to/file.json'
+    fpath = '/home/stefan/workspace/interoperability/europeana_files/jsons/00101'
     main(fpath)
