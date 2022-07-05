@@ -41,7 +41,7 @@ default_contract = contract_data = {
 
 
 def main(europeana_dir):
-    for fname in os.listdir(europeana_dir)[:10]:
+    for i, fname in enumerate(os.listdir(europeana_dir)[:200]):
         load_europeana_dataset(os.path.join(europeana_dir, fname))
 
 
@@ -50,7 +50,7 @@ def load_europeana_dataset(fpath):
         dataset = json.load(f)
     dataset['name'] = dataset['name'].lower()
     dataset['name'] = dataset['name']+str(uuid4())[-6:]
-    dataset['theme'] = "https://trusts.org/vacabulary/themes/Culture"
+    dataset['theme'] = "https://trusts.poolparty.biz/Themes/40"
     dataset['owner_org'] = dataset['owner_org'].lower()
     post_dataset(dataset)
 

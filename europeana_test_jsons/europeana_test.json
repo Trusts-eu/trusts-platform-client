@@ -1,10 +1,11 @@
-{"name": "europeana-test-1",
-  "title": "Europeana Test 1 Igreja do Antigo Convento de Nossa Senhora da Oliva, Tojal : revestimento de azulejos de padr\u00e3o",
-  "notes": "Europeana Test 1 Igreja do Antigo Convento de Nossa Senhora da Oliva, Tojal : revestimento de azulejos de padr\u00e3o",
+{"name": "europeana-test-006-victor-and-stefan",
+  "title": "Stefan 006 Testing Europeana 20220511",
+  "notes": "Stefan 006 Testing Europeana 20220511",
   "owner_org": "Europeana",
+  "keywords": ["Test keywords", "Test keyword"], 
   "resources": {"rights": "",
     "url": "https://digitile.gulbenkian.pt/digital/api/singleitem/image/jmss/4097/default.jpg",
-    "filename": "default.jpg",
+    "name": "default_04.jp",
     "dataProvider": "",
     "created": "2019-07-17T09:42:13.027Z",
-    "europeana_id": "0A4B4FE20574EE28D35060319690A74E50C1DD14"}}
+    "remoteId": "0A4B4FE20574EE28D35060319690A74E50C1DD14"}}
