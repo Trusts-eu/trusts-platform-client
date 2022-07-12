@@ -1,21 +1,71 @@
-## Python client for the TRUSTS platfrom
+# TRUSTS platform client 
 
-This collection of python scripts and modules is meant to be a way to 
-programatically access the TRUSTS platform. 
+The TRUSTS platform client is a way to programatically access the TRUSTS 
+platform. It is built on top of [ckanapi](https://github.com/ckan/ckanapi),
+which itself is a wrapper around the [CKAN Action API](http://docs.ckan.org/en/latest/api/index.html#action-api-reference).
+The TRUSTS platform client extends ckanapi with all functionality required to
+fully interoperate with TRUSTS programmatically, i.e. including functionality
+to push the Dataspace Connector or to push to the central node. Using ckanapi
+as the basis makes sure that all core functionality available in CKAN is also
+available from the TRUSTS platform client.
 
-### Pre-requisistes
+## Installation
 
-1. (Optional but recommended) create a python virtual environment and 
-   activate it
-1. Clone this repo
-1. Make a copy of the `.env_example` file and call it `.env`
-1. Get an API token from your platform's node. Go to  
-   http://ckan.url/user/admin/api-tokens  logged in as user admin.
-   
-1. Paste this token in the `.env` file
-1. Install the required libraries with `pip install -r requirements.txt`
+1. **Virtual environment (optional but recommended):** create a python virtual environment and 
+   activate it:
 
+```
+python3 -m venv venv
+source venv/bin/activate
+```
 
-### Things that you can try already
+2. **Installation:**
 
-1. Create a dataset in ckan `python sample_create_dataset.py`
+```
+pip install git+https://gitlab.com/trusts-platform/trusts-platform-client.git
+```
+
+## Usage
+
+1. Log into your TRUSTS node as an admin user and get an API token in the
+   [admin area](http://ckan.url/user/admin/api-tokens).
+
+2. Import the class ```TRUSTSCKAN```, the main class for exchanging data with
+TRUSTS:
+
+    ```
+    >>> from trusts_platform_client.trustsckan import TRUSTSCKAN
+    ```
+
+3. Connect to a running TRUSTS instance:
+
+    ```
+    >>> trusts_url = 'http://127.0.0.1:5000/' # Replace this with your actual URL
+    >>> CKAN_TOKEN = <YOUR_API_TOKEN>
+    >>> _trustsckan = TRUSTSCKAN(trusts_url, apikey=CKAN_TOKEN)
+    ```
+
+4. Check that you can access it:
+
+    ```
+    >>> _trustsckan.action.status_show()
+    ```
+
+5. Import helper functions to create exemplary data for testing purposes:
+
+    ```
+    >>> from trusts_platform_client.trustsckan import helper_load_europeana_dataset, helper_create_contract_data
+    ```
+
+6. Actually create the exemplary data:
+
+    ```
+    >>> dataset = helper_load_europeana_data()
+    >>> contract_data = helper_create_contract_data()
+    ```
+
+7. Transfer the exemplary data into TRUSTS:
+
+    ```
+    >>> _trustsckan.post_dataset(dataset, contract_data)
+    ```

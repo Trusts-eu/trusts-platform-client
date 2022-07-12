@@ -78,6 +78,7 @@ class TRUSTSCKAN(RemoteCKAN):
         headers = {"Authorization": self.apikey}
         _ = requests.get(push_url, headers=headers)
         _ = requests.post(publish_url, json=contract_data, headers=headers)
+        return dataset['name']
 
     def __create_url(self, package_id):
         """
