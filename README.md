@@ -34,7 +34,7 @@ pip install git+https://gitlab.com/trusts-platform/trusts-platform-client.git
 TRUSTS:
 
     ```
-    >>> from trusts_platform_client.trustsckan import TRUSTSCKAN
+    >>> from trusts_platform_client import TRUSTSCKAN
     ```
 
 3. Connect to a running TRUSTS instance:
