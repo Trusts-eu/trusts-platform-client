@@ -66,25 +66,37 @@ class TRUSTSCKAN(RemoteCKAN):
         res = self.call_action('package_create', data_dict=dataset)
 
         package_id = res['id']
+        #print("Got Response when package_create:",res)
+
+
         resources["package_id"] = package_id
         resources.pop('created')
         contract_data['title'] = dataset['title']
         contract_data['pkg_id'] = package_id
 
-        push_url, publish_url = self.__create_url(package_id)
+        #print("\n---\npackage_id is",package_id)
+        push_url, publish_url = self.__create_url(str(package_id))
 
         # requests
         res = self.call_action('resource_create', data_dict=resources)
+        #print("Got Response when resource_create:",res)
+
         headers = {"Authorization": self.apikey}
-        _ = requests.get(push_url, headers=headers)
-        _ = requests.post(publish_url, json=contract_data, headers=headers)
+        #print("Publishing dataset")
+        #print("first GETting to", push_url)
+        re = requests.get(push_url, headers=headers)
+        #print("got",re.status_code,"as response from pushing")
+        #print("now POSTing to", publish_url)
+        re = requests.post(publish_url, json=contract_data, headers=headers)
+        #print("got ",re.status_code,"as response from publishing")
+
         return dataset['name']
 
-    def __create_url(self, package_id):
+    def __create_url(self, packid):
         """
         Creates the final URLs to push the packages to.
         """
-        push_url = urljoin(self.address, self.URL_PUSH_TO_DSC, package_id)
-        publish_url = urljoin(self.address, self.URL_PUSH_TO_CENTRAL,
-                              package_id)
+        push_url = urljoin(self.address, self.URL_PUSH_TO_DSC)+packid
+        publish_url = urljoin(self.address, self.URL_PUSH_TO_CENTRAL)+packid
+        #print("createdurls are \n\t",push_url,"\n\t",publish_url)
         return push_url, publish_url
